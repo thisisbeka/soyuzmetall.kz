@@ -17,6 +17,11 @@ const wireCards: WireCard[] = [
   { nameRu: 'Нихромовая проволока', nameKk: 'Нихромды сым', image: '/nihromovye-provoloki.jpg' },
   { nameRu: 'Проволока арматурная', nameKk: 'Арматуралық сым', image: '/armaturnye-provoloki.jpg' },
   { nameRu: 'Проволока для пружинных шайб', nameKk: 'Серіппелі шайбаларға арналған сым', image: '/provoloka-dlya-pruzhinnyh-shajb.jpg' },
+  { nameRu: 'Проволока канатная', nameKk: 'Арқанды сым', image: '/provoloka-kanatnaya.jpg' },
+  { nameRu: 'Сварочная проволока', nameKk: 'Дәнекерлеу сымы', image: '/svarochnye-provoloki.jpg' },
+  { nameRu: 'Проволока углеродистая', nameKk: 'Көміртекті сым', image: '/provoloka-uglerodistaya.jpg' },
+  { nameRu: 'Проволока пружинная', nameKk: 'Серіппелі сым', image: '/provoloka-pruzhinnaya.jpg' },
+  { nameRu: 'Проволока оцинкованная', nameKk: 'Мырышталған сым', image: '/oczinkovannye-provoloki.jpg' },
 ];
 
 export function WireProducts() {
