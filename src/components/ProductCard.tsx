@@ -13,11 +13,13 @@ interface ProductCardProps {
 const productImages: Record<string, string> = {
   'Арматура': '/armatura.png',
   'Балка': '/balka.png',
+  'Лист': '/metallicheskie-listy.jpg',
   'Квадрат': '/kvadrat.png',
   'Профлист': '/proflist.png',
   'Трубы': '/truby.png',
   'Проволока': '/provoloka.png',
   'Арқалық': '/balka.png',
+  'Парақ': '/metallicheskie-listy.jpg',
   'Төртбұрыш': '/kvadrat.png',
   'Профпарақ': '/proflist.png',
   'Құбырлар': '/truby.png',
@@ -36,6 +38,9 @@ export function ProductCard({ name, description, index }: ProductCardProps) {
       window.scrollTo(0, 0);
     } else if (name === 'Балка' || name === 'Арқалық') {
       navigate('/products/beam');
+      window.scrollTo(0, 0);
+    } else if (name === 'Лист' || name === 'Парақ') {
+      navigate('/products/sheet');
       window.scrollTo(0, 0);
     }
   };
