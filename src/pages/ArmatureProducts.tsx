@@ -6,35 +6,37 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
 interface Product {
-  name: string;
-  class?: string;
+  nameRu: string;
+  nameKk: string;
+  classRu?: string;
+  classKk?: string;
 }
 
 const armatureProducts: Product[] = [
-  { name: 'Арматура 40 мм' },
-  { name: 'Арматура 32 мм' },
-  { name: 'Арматура 30 мм' },
-  { name: 'Арматура 25 мм' },
-  { name: 'Арматура 22 мм' },
-  { name: 'Арматура 20 мм' },
-  { name: 'Арматура 18 мм' },
-  { name: 'Арматура 16 мм' },
-  { name: 'Арматура 14 мм' },
-  { name: 'Арматура 12 мм' },
-  { name: 'Арматура 10 мм' },
-  { name: 'Арматура 8 мм' },
-  { name: 'Арматура 6,5 мм' },
-  { name: 'Арматура 8 мм', class: 'класс AIII' },
-  { name: 'Арматура 10 мм', class: 'класс AIII' },
-  { name: 'Арматура 12 мм', class: 'класс AIII' },
-  { name: 'Арматура 14 мм', class: 'класс AIII' },
-  { name: 'Арматура 16 мм', class: 'класс AIII' },
-  { name: 'Арматура 18 мм', class: 'класс AIII' },
-  { name: 'Арматура 20 мм', class: 'класс AIII' },
-  { name: 'Арматура 22 мм', class: 'класс AIII' },
-  { name: 'Арматура 25 мм', class: 'класс AIII' },
-  { name: 'Арматура 28 мм', class: 'класс AIII' },
-  { name: 'Арматура 32 мм', class: 'класс AIII' },
+  { nameRu: 'Арматура 40 мм', nameKk: 'Арматура 40 мм' },
+  { nameRu: 'Арматура 32 мм', nameKk: 'Арматура 32 мм' },
+  { nameRu: 'Арматура 30 мм', nameKk: 'Арматура 30 мм' },
+  { nameRu: 'Арматура 25 мм', nameKk: 'Арматура 25 мм' },
+  { nameRu: 'Арматура 22 мм', nameKk: 'Арматура 22 мм' },
+  { nameRu: 'Арматура 20 мм', nameKk: 'Арматура 20 мм' },
+  { nameRu: 'Арматура 18 мм', nameKk: 'Арматура 18 мм' },
+  { nameRu: 'Арматура 16 мм', nameKk: 'Арматура 16 мм' },
+  { nameRu: 'Арматура 14 мм', nameKk: 'Арматура 14 мм' },
+  { nameRu: 'Арматура 12 мм', nameKk: 'Арматура 12 мм' },
+  { nameRu: 'Арматура 10 мм', nameKk: 'Арматура 10 мм' },
+  { nameRu: 'Арматура 8 мм', nameKk: 'Арматура 8 мм' },
+  { nameRu: 'Арматура 6,5 мм', nameKk: 'Арматура 6,5 мм' },
+  { nameRu: 'Арматура 8 мм', nameKk: 'Арматура 8 мм', classRu: 'класс AIII', classKk: 'AIII сыныбы' },
+  { nameRu: 'Арматура 10 мм', nameKk: 'Арматура 10 мм', classRu: 'класс AIII', classKk: 'AIII сыныбы' },
+  { nameRu: 'Арматура 12 мм', nameKk: 'Арматура 12 мм', classRu: 'класс AIII', classKk: 'AIII сыныбы' },
+  { nameRu: 'Арматура 14 мм', nameKk: 'Арматура 14 мм', classRu: 'класс AIII', classKk: 'AIII сыныбы' },
+  { nameRu: 'Арматура 16 мм', nameKk: 'Арматура 16 мм', classRu: 'класс AIII', classKk: 'AIII сыныбы' },
+  { nameRu: 'Арматура 18 мм', nameKk: 'Арматура 18 мм', classRu: 'класс AIII', classKk: 'AIII сыныбы' },
+  { nameRu: 'Арматура 20 мм', nameKk: 'Арматура 20 мм', classRu: 'класс AIII', classKk: 'AIII сыныбы' },
+  { nameRu: 'Арматура 22 мм', nameKk: 'Арматура 22 мм', classRu: 'класс AIII', classKk: 'AIII сыныбы' },
+  { nameRu: 'Арматура 25 мм', nameKk: 'Арматура 25 мм', classRu: 'класс AIII', classKk: 'AIII сыныбы' },
+  { nameRu: 'Арматура 28 мм', nameKk: 'Арматура 28 мм', classRu: 'класс AIII', classKk: 'AIII сыныбы' },
+  { nameRu: 'Арматура 32 мм', nameKk: 'Арматура 32 мм', classRu: 'класс AIII', classKk: 'AIII сыныбы' },
 ];
 
 export function ArmatureProducts() {
@@ -68,7 +70,13 @@ export function ArmatureProducts() {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.button
-            onClick={() => navigate('/')}
+            onClick={() => {
+              navigate('/');
+              setTimeout(() => {
+                const element = document.querySelector('#products');
+                element?.scrollIntoView({ behavior: 'smooth' });
+              }, 100);
+            }}
             initial={prefersReducedMotion ? {} : { opacity: 0, x: -20 }}
             animate={prefersReducedMotion ? {} : { opacity: 1, x: 0 }}
             whileHover={prefersReducedMotion ? {} : { x: -5 }}
@@ -143,11 +151,11 @@ export function ArmatureProducts() {
                   </motion.div>
 
                   <h3 className="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">
-                    {product.name}
+                    {language === 'kk' ? product.nameKk : product.nameRu}
                   </h3>
-                  {product.class && (
+                  {(product.classRu || product.classKk) && (
                     <p className="text-slate-400 text-sm leading-relaxed">
-                      {product.class}
+                      {language === 'kk' ? product.classKk : product.classRu}
                     </p>
                   )}
                 </div>
