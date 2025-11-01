@@ -16,14 +16,14 @@ const productImages: Record<string, string> = {
   'Лист': '/metallicheskie-listy.jpg',
   'Оцинковка': '/metallicheskie-listy.jpg',
   'Квадрат': '/kvadrat.png',
-  'Профлист': '/proflist.png',
+  'Профлист': '/oczinkovannye-proflisty.jpg',
   'Трубы': '/truby.png',
   'Проволока': '/provoloka.png',
   'Арқалық': '/balka.png',
   'Парақ': '/metallicheskie-listy.jpg',
   'Мырышталған': '/metallicheskie-listy.jpg',
   'Төртбұрыш': '/kvadrat.png',
-  'Профпарақ': '/proflist.png',
+  'Профпарақ': '/oczinkovannye-proflisty.jpg',
   'Құбырлар': '/truby.png',
   'Сым': '/provoloka.png',
 };
@@ -46,6 +46,9 @@ export function ProductCard({ name, description, index }: ProductCardProps) {
       window.scrollTo(0, 0);
     } else if (name === 'Оцинковка' || name === 'Мырышталған') {
       navigate('/products/galvanized');
+      window.scrollTo(0, 0);
+    } else if (name === 'Профлист' || name === 'Профпарақ') {
+      navigate('/products/proflist');
       window.scrollTo(0, 0);
     }
   };
