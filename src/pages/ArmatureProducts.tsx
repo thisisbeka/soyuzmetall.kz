@@ -3,6 +3,7 @@ import { useI18n } from '../i18n/i18n';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import { ArrowLeft, Package } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 interface Product {
   name: string;
@@ -42,7 +43,15 @@ export function ArmatureProducts() {
   const navigate = useNavigate();
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
-  const title = language === 'ru' ? 'Виды продукции Арматура' : 'Арматура өнім түрлері';
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const title = language === 'kk' ? 'Арматура өнім түрлері' : 'Виды продукции Арматура';
+  const subtitle = language === 'kk'
+    ? 'Әртүрлі диаметр мен сыныптағы құрылыс арматурасы'
+    : 'Строительная арматура различных диаметров и классов';
+  const backText = language === 'kk' ? 'Каталогқа оралу' : 'Назад к каталогу';
 
   return (
     <div className="min-h-screen bg-slate-900">
@@ -66,7 +75,7 @@ export function ArmatureProducts() {
             className="flex items-center gap-2 text-slate-400 hover:text-blue-400 transition-colors mb-8 group"
           >
             <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-            <span>{language === 'ru' ? 'Назад к каталогу' : 'Каталогқа оралу'}</span>
+            <span>{backText}</span>
           </motion.button>
 
           <div className="text-center mb-16">
@@ -83,9 +92,7 @@ export function ArmatureProducts() {
               transition={{ delay: 0.1 }}
               className="text-xl text-slate-400"
             >
-              {language === 'ru'
-                ? 'Строительная арматура различных диаметров и классов'
-                : 'Әртүрлі диаметр мен сыныптағы құрылыс арматурасы'}
+              {subtitle}
             </motion.p>
           </div>
 

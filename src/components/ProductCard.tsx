@@ -33,6 +33,7 @@ export function ProductCard({ name, description, index }: ProductCardProps) {
   const handleClick = () => {
     if (name === 'Арматура') {
       navigate('/products/armature');
+      window.scrollTo(0, 0);
     }
   };
 
