@@ -34,6 +34,9 @@ export function ProductCard({ name, description, index }: ProductCardProps) {
     if (name === 'Арматура') {
       navigate('/products/armature');
       window.scrollTo(0, 0);
+    } else if (name === 'Балка' || name === 'Арқалық') {
+      navigate('/products/beam');
+      window.scrollTo(0, 0);
     }
   };
 

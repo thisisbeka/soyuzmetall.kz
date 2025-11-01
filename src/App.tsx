@@ -5,6 +5,7 @@ import { Footer } from './components/Footer';
 import { WhatsAppButton } from './components/WhatsAppButton';
 import { HomePage } from './pages/HomePage';
 import { ArmatureProducts } from './pages/ArmatureProducts';
+import { BeamProducts } from './pages/BeamProducts';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/products/armature" element={<ArmatureProducts />} />
+              <Route path="/products/beam" element={<BeamProducts />} />
             </Routes>
           </main>
           <Footer />
