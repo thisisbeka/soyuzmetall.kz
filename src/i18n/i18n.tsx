@@ -68,5 +68,8 @@ export function useI18n() {
   if (!context) {
     throw new Error('useI18n must be used within I18nProvider');
   }
-  return context;
+  return {
+    ...context,
+    language: context.locale,
+  };
 }
