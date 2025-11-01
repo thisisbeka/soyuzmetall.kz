@@ -3,7 +3,8 @@ import { useI18n } from '../i18n/i18n';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import { ArrowLeft, Package } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { ContactFormModal } from '../components/ContactFormModal';
 
 interface ProductSpec {
   name: string;
@@ -40,10 +41,18 @@ export function GalvanizedProducts() {
   const { t, language } = useI18n();
   const prefersReducedMotion = useReducedMotion();
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const handleOrderClick = (spec: ProductSpec) => {
+    const message = `Заказ: ${spec.name}, ${spec.dimensions}, Вес: ${spec.weight} кг, Количество в тонне: ${spec.quantity} шт`;
+    setSelectedProduct(message);
+    setIsModalOpen(true);
+  };
 
   const content = {
     ru: {
@@ -181,7 +190,10 @@ export function GalvanizedProducts() {
                       <td className="p-4 text-slate-300">{spec.weight}</td>
                       <td className="p-4 text-slate-300">{spec.quantity}</td>
                       <td className="p-4">
-                        <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm font-medium">
+                        <button
+                          onClick={() => handleOrderClick(spec)}
+                          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm font-medium"
+                        >
                           {text.orderButton}
                         </button>
                       </td>
@@ -193,6 +205,12 @@ export function GalvanizedProducts() {
           </motion.div>
         </div>
       </section>
+
+      <ContactFormModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        prefilledMessage={selectedProduct}
+      />
     </div>
   );
 }
