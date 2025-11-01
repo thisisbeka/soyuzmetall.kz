@@ -124,70 +124,11 @@ export function SquareProducts() {
               {text.title}
             </motion.h1>
 
-            <motion.div
-              initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
-              animate={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="max-w-4xl mx-auto mb-16 space-y-6"
-            >
-              <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-8 border border-slate-700">
-                <p className="text-slate-300 text-lg leading-relaxed mb-6">
-                  {text.description.intro}
-                </p>
-                <p className="text-slate-300 text-lg leading-relaxed">
-                  {text.description.offer}
-                </p>
-              </div>
-
-              <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-8 border border-slate-700">
-                <h2 className="text-2xl font-bold text-white mb-4">
-                  {text.description.whatIsTitle}
-                </h2>
-                <p className="text-slate-300 text-lg leading-relaxed">
-                  {text.description.whatIs}
-                </p>
-              </div>
-
-              <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-8 border border-slate-700">
-                <h2 className="text-2xl font-bold text-white mb-4">
-                  {text.description.applicationTitle}
-                </h2>
-                <p className="text-slate-300 text-lg leading-relaxed mb-4">
-                  {text.description.application}
-                </p>
-                <div className="space-y-4">
-                  <p className="text-slate-300 text-lg leading-relaxed">
-                    {text.description.construction}
-                  </p>
-                  <p className="text-slate-300 text-lg leading-relaxed">
-                    {text.description.industry}
-                  </p>
-                </div>
-              </div>
-
-              <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-8 border border-slate-700">
-                <h2 className="text-2xl font-bold text-white mb-4">
-                  {text.description.priceTitle}
-                </h2>
-                <p className="text-slate-300 text-lg leading-relaxed mb-6">
-                  {text.description.price}
-                </p>
-                <ul className="space-y-3">
-                  {text.description.features.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <span className="text-blue-400 mt-1.5 flex-shrink-0">•</span>
-                      <span className="text-slate-300 text-lg leading-relaxed">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </motion.div>
-
             <h2 className="text-3xl font-bold text-white mb-8 text-center">
               {language === 'kk' ? 'Өнімдер' : 'Продукция'}
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
               {squareCards.map((card, index) => {
                 const cardName = language === 'kk' ? card.nameKk : card.nameRu;
 
@@ -246,6 +187,65 @@ export function SquareProducts() {
                 );
               })}
             </div>
+
+            <motion.div
+              initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
+              animate={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="max-w-4xl mx-auto space-y-6"
+            >
+              <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-8 border border-slate-700">
+                <p className="text-slate-300 text-lg leading-relaxed mb-6">
+                  {text.description.intro}
+                </p>
+                <p className="text-slate-300 text-lg leading-relaxed">
+                  {text.description.offer}
+                </p>
+              </div>
+
+              <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-8 border border-slate-700">
+                <h2 className="text-2xl font-bold text-white mb-4">
+                  {text.description.whatIsTitle}
+                </h2>
+                <p className="text-slate-300 text-lg leading-relaxed">
+                  {text.description.whatIs}
+                </p>
+              </div>
+
+              <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-8 border border-slate-700">
+                <h2 className="text-2xl font-bold text-white mb-4">
+                  {text.description.applicationTitle}
+                </h2>
+                <p className="text-slate-300 text-lg leading-relaxed mb-4">
+                  {text.description.application}
+                </p>
+                <div className="space-y-4">
+                  <p className="text-slate-300 text-lg leading-relaxed">
+                    {text.description.construction}
+                  </p>
+                  <p className="text-slate-300 text-lg leading-relaxed">
+                    {text.description.industry}
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-8 border border-slate-700">
+                <h2 className="text-2xl font-bold text-white mb-4">
+                  {text.description.priceTitle}
+                </h2>
+                <p className="text-slate-300 text-lg leading-relaxed mb-6">
+                  {text.description.price}
+                </p>
+                <ul className="space-y-3">
+                  {text.description.features.map((feature, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <span className="text-blue-400 mt-1.5 flex-shrink-0">•</span>
+                      <span className="text-slate-300 text-lg leading-relaxed">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
