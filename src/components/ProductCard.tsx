@@ -56,6 +56,9 @@ export function ProductCard({ name, description, index }: ProductCardProps) {
     } else if (name === 'Проволока' || name === 'Сым') {
       navigate('/products/wire');
       window.scrollTo(0, 0);
+    } else if (name === 'Квадрат' || name === 'Төртбұрыш') {
+      navigate('/products/square');
+      window.scrollTo(0, 0);
     }
   };
 
