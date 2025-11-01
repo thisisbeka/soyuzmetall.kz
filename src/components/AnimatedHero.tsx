@@ -5,7 +5,7 @@ import { useReducedMotion } from '../hooks/useReducedMotion';
 import { Download } from 'lucide-react';
 import { GlowingEffect } from './ui/glowing-effect';
 import { InteractiveHoverButton } from './ui/interactive-hover-button';
-import { TypewriterUnderline } from './ui/typewriter-underline';
+import { TextRotate } from './ui/text-rotate';
 
 export function AnimatedHero() {
   const { t } = useI18n();
@@ -87,20 +87,29 @@ export function AnimatedHero() {
           </span>
         </motion.div>
 
-        <motion.h1
-          variants={itemVariants}
-          className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-5 leading-tight tracking-wide"
-        >
-          <span className="block text-left max-w-4xl mx-auto px-4">
-            {t('hero.title')}{' '}
-            <TypewriterUnderline
-              words={t('hero.rotatingWords') as string[]}
-              className="text-white font-bold"
-              typingSpeed={100}
-              pauseDuration={500}
+        <LayoutGroup>
+          <motion.h1
+            variants={itemVariants}
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-5 leading-tight tracking-wide flex flex-wrap items-center justify-center gap-3"
+            layout
+          >
+            <motion.span layout transition={{ type: "spring", damping: 30, stiffness: 400 }}>
+              {t('hero.title')}
+            </motion.span>
+            <TextRotate
+              texts={t('hero.rotatingWords') as string[]}
+              mainClassName="text-white px-3 sm:px-4 md:px-5 bg-blue-600 overflow-hidden py-1 sm:py-2 md:py-2 justify-center rounded-lg shadow-lg shadow-blue-600/30"
+              staggerFrom="last"
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "-120%" }}
+              staggerDuration={0.025}
+              splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
+              transition={{ type: "spring", damping: 30, stiffness: 400 }}
+              rotationInterval={2500}
             />
-          </span>
-        </motion.h1>
+          </motion.h1>
+        </LayoutGroup>
 
         <motion.p
           variants={itemVariants}
