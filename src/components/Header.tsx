@@ -5,12 +5,15 @@ import { useReducedMotion } from '../hooks/useReducedMotion';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { MobileMenu } from './MobileMenu';
 import { Menu } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export function Header() {
   const { t } = useI18n();
   const prefersReducedMotion = useReducedMotion();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,6 +22,20 @@ export function Header() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.querySelector(href);
+        element?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      const element = document.querySelector(href);
+      element?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const navItems = [
     { key: 'home', href: '#home' },
@@ -42,6 +59,7 @@ export function Header() {
           <div className="flex items-center justify-between h-20">
             <motion.a
               href="#home"
+              onClick={(e) => handleNavClick(e, '#home')}
               className="flex items-center"
               whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
             >
@@ -66,6 +84,7 @@ export function Header() {
                 <a
                   key={item.key}
                   href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
                   className="relative text-slate-300 hover:text-white transition-colors group"
                 >
                   {t(`nav.${item.key}`)}

@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import { Package } from 'lucide-react';
 import { GlowingEffect } from './ui/glowing-effect';
+import { useNavigate } from 'react-router-dom';
 
 interface ProductCardProps {
   name: string;
@@ -27,6 +28,13 @@ export function ProductCard({ name, description, index }: ProductCardProps) {
   const prefersReducedMotion = useReducedMotion();
   const backgroundImage = productImages[name];
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (name === 'Арматура') {
+      navigate('/products/armature');
+    }
+  };
 
   return (
     <motion.div
@@ -49,7 +57,8 @@ export function ProductCard({ name, description, index }: ProductCardProps) {
         scale: 1.02,
         transition: { duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }
       }}
-      className="group relative bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl p-6 border border-slate-700 hover:border-blue-500/50 transition-all duration-300 overflow-hidden will-change-transform"
+      onClick={handleClick}
+      className="group relative bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl p-6 border border-slate-700 hover:border-blue-500/50 transition-all duration-300 overflow-hidden will-change-transform cursor-pointer"
     >
 
       {backgroundImage && (
