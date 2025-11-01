@@ -10,6 +10,7 @@ import { SheetProducts } from './pages/SheetProducts';
 import { GalvanizedProducts } from './pages/GalvanizedProducts';
 import { ProflistProducts } from './pages/ProflistProducts';
 import { PipeProducts } from './pages/PipeProducts';
+import { WireProducts } from './pages/WireProducts';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route path="/products/galvanized" element={<GalvanizedProducts />} />
               <Route path="/products/proflist" element={<ProflistProducts />} />
               <Route path="/products/pipes" element={<PipeProducts />} />
+              <Route path="/products/wire" element={<WireProducts />} />
             </Routes>
           </main>
           <Footer />

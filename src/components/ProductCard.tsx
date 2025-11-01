@@ -53,6 +53,9 @@ export function ProductCard({ name, description, index }: ProductCardProps) {
     } else if (name === 'Трубы' || name === 'Құбырлар') {
       navigate('/products/pipes');
       window.scrollTo(0, 0);
+    } else if (name === 'Проволока' || name === 'Сым') {
+      navigate('/products/wire');
+      window.scrollTo(0, 0);
     }
   };
 
