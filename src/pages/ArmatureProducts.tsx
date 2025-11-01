@@ -88,6 +88,7 @@ export function ArmatureProducts() {
 
           <div className="text-center mb-16">
             <motion.h1
+              key={`title-${language}`}
               initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
               animate={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
               className="text-4xl md:text-5xl font-bold text-white mb-4"
@@ -95,6 +96,7 @@ export function ArmatureProducts() {
               {title}
             </motion.h1>
             <motion.p
+              key={`subtitle-${language}`}
               initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
               animate={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
@@ -105,9 +107,13 @@ export function ArmatureProducts() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {armatureProducts.map((product, index) => (
+            {armatureProducts.map((product, index) => {
+              const productName = language === 'kk' ? product.nameKk : product.nameRu;
+              const productClass = language === 'kk' ? product.classKk : product.classRu;
+
+              return (
               <motion.div
-                key={index}
+                key={`${index}-${language}`}
                 initial={prefersReducedMotion ? {} : {
                   opacity: 0,
                   y: 20
@@ -151,18 +157,19 @@ export function ArmatureProducts() {
                   </motion.div>
 
                   <h3 className="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">
-                    {language === 'kk' ? product.nameKk : product.nameRu}
+                    {productName}
                   </h3>
-                  {(product.classRu || product.classKk) && (
+                  {productClass && (
                     <p className="text-slate-400 text-sm leading-relaxed">
-                      {language === 'kk' ? product.classKk : product.classRu}
+                      {productClass}
                     </p>
                   )}
                 </div>
 
                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </motion.div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
