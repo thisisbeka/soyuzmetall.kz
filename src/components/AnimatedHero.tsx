@@ -36,14 +36,14 @@ export function AnimatedHero() {
   return (
     <section id="home" className="relative min-h-[85vh] flex items-center overflow-hidden bg-slate-50">
       <div
-        className="absolute inset-0 opacity-10"
+        className="absolute inset-0 opacity-30"
         style={{
           backgroundImage: `url('/1.png')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-white/80 via-white/60 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-white/60 via-white/40 to-transparent" />
 
       <motion.div
         className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-24 lg:py-32"
