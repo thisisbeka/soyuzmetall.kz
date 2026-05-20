@@ -36,7 +36,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       transition={{ duration: 0.3 }}
       className="fixed inset-0 z-[100] lg:hidden"
     >
-      <div className="absolute inset-0 bg-slate-900/98 backdrop-blur-xl" onClick={onClose} />
+      <div className="absolute inset-0 bg-slate-900" onClick={onClose} />
 
       <div className="relative h-full overflow-y-auto">
         <div className="min-h-full flex flex-col">
