@@ -96,7 +96,7 @@ export function AnimatedHero() {
           <motion.div variants={itemVariants}>
             <button
               onClick={handleWhatsApp}
-              className="inline-flex items-center gap-3 px-8 py-4 bg-green-500 hover:bg-green-600 text-white font-semibold text-lg rounded-2xl shadow-xl shadow-green-500/30 hover:shadow-green-500/40 transition-all duration-300 hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 sm:gap-3 px-5 sm:px-8 py-3 sm:py-4 bg-green-500 hover:bg-green-600 text-white font-semibold text-base sm:text-lg rounded-xl sm:rounded-2xl shadow-xl shadow-green-500/30 hover:shadow-green-500/40 transition-all duration-300 hover:-translate-y-0.5"
             >
               <img src="/wp_icon.png" alt="" className="w-6 h-6 filter brightness-0 invert" />
               {t('hero.ctaWhatsApp')}
