@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useI18n } from '../i18n/i18n';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import { Send, CheckCircle, AlertCircle } from 'lucide-react';
-import { InteractiveHoverButton } from './ui/interactive-hover-button';
 
 export function ContactForm() {
   const { t } = useI18n();
@@ -36,24 +35,17 @@ export function ContactForm() {
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
-
-    if (!formData.name.trim()) {
-      newErrors.name = t('contactForm.nameRequired');
-    }
-    if (!formData.phone.trim()) {
-      newErrors.phone = t('contactForm.phoneRequired');
-    }
+    if (!formData.name.trim()) newErrors.name = t('contactForm.nameRequired');
+    if (!formData.phone.trim()) newErrors.phone = t('contactForm.phoneRequired');
     if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = t('contactForm.emailInvalid');
     }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!validate()) return;
 
     try {
@@ -62,11 +54,10 @@ export function ContactForm() {
         method: 'POST',
         body: new FormData(form)
       });
-
       setStatus('success');
       setFormData({ name: '', phone: '', email: '', message: '' });
       setTimeout(() => setStatus('idle'), 5000);
-    } catch (error) {
+    } catch {
       setStatus('error');
       setTimeout(() => setStatus('idle'), 5000);
     }
@@ -75,96 +66,55 @@ export function ContactForm() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: '' }));
-    }
+    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: '' }));
   };
 
   return (
-    <section id="contacts" className="relative py-20 overflow-hidden">
-      <div
-        className="absolute inset-0 opacity-30 will-change-auto"
-        style={{
-          backgroundImage: `url('/3.png')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-900/80" />
-
-      <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contacts" className="relative py-16 bg-slate-50">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.h2
           initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
           whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-4xl font-bold text-center text-white mb-12"
+          className="text-3xl font-bold text-center text-slate-900 mb-10"
         >
           {t('contactForm.title')}
         </motion.h2>
 
         <motion.div
-          initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
+          initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
           whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-slate-800/60 backdrop-blur-sm rounded-2xl p-4 sm:p-8 border border-slate-700/50 shadow-2xl"
+          className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm"
         >
           <AnimatePresence mode="wait">
             {status === 'success' && (
               <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                className="mb-6 p-4 bg-green-500/10 border border-green-500/30 rounded-lg flex items-center gap-3"
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3"
               >
-                <CheckCircle className="w-6 h-6 text-green-500" />
-                <p className="text-green-400">{t('contactForm.success')}</p>
-
-                <motion.div
-                  className="absolute inset-0 pointer-events-none"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: [0, 1, 0] }}
-                  transition={{ duration: 1 }}
-                >
-                  {[...Array(20)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      className="absolute w-2 h-2 bg-blue-500 rounded-full"
-                      initial={{
-                        x: '50%',
-                        y: '50%',
-                        scale: 0,
-                      }}
-                      animate={{
-                        x: `${50 + (Math.random() - 0.5) * 200}%`,
-                        y: `${50 + (Math.random() - 0.5) * 200}%`,
-                        scale: [0, 1, 0],
-                      }}
-                      transition={{
-                        duration: 1,
-                        delay: i * 0.05,
-                      }}
-                    />
-                  ))}
-                </motion.div>
+                <CheckCircle className="w-5 h-5 text-green-600" />
+                <p className="text-green-700">{t('contactForm.success')}</p>
               </motion.div>
             )}
-
             {status === 'error' && (
               <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-lg flex items-center gap-3"
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-3"
               >
-                <AlertCircle className="w-6 h-6 text-red-500" />
-                <p className="text-red-400">{t('contactForm.error')}</p>
+                <AlertCircle className="w-5 h-5 text-red-600" />
+                <p className="text-red-700">{t('contactForm.error')}</p>
               </motion.div>
             )}
           </AnimatePresence>
 
-          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-1 sm:mb-2">
+              <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-1.5">
                 {t('contactForm.name')}
               </label>
               <input
@@ -173,15 +123,15 @@ export function ContactForm() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-slate-900/60 backdrop-blur-sm border rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 transition-all ${
-                  errors.name ? 'border-red-500 focus:ring-red-500' : 'border-slate-600 focus:ring-blue-500'
+                className={`w-full px-4 py-3 bg-slate-50 border rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 transition-all ${
+                  errors.name ? 'border-red-300 focus:ring-red-500' : 'border-slate-200 focus:ring-blue-500 focus:border-blue-500'
                 }`}
               />
-              {errors.name && <p className="mt-1 text-sm text-red-400">{errors.name}</p>}
+              {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
             </div>
 
             <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-slate-300 mb-1 sm:mb-2">
+              <label htmlFor="phone" className="block text-sm font-medium text-slate-700 mb-1.5">
                 {t('contactForm.phone')}
               </label>
               <input
@@ -190,15 +140,15 @@ export function ContactForm() {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-slate-900/60 backdrop-blur-sm border rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 transition-all ${
-                  errors.phone ? 'border-red-500 focus:ring-red-500' : 'border-slate-600 focus:ring-blue-500'
+                className={`w-full px-4 py-3 bg-slate-50 border rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 transition-all ${
+                  errors.phone ? 'border-red-300 focus:ring-red-500' : 'border-slate-200 focus:ring-blue-500 focus:border-blue-500'
                 }`}
               />
-              {errors.phone && <p className="mt-1 text-sm text-red-400">{errors.phone}</p>}
+              {errors.phone && <p className="mt-1 text-sm text-red-500">{errors.phone}</p>}
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-1 sm:mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1.5">
                 {t('contactForm.email')}
               </label>
               <input
@@ -207,15 +157,15 @@ export function ContactForm() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-slate-900/60 backdrop-blur-sm border rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 transition-all ${
-                  errors.email ? 'border-red-500 focus:ring-red-500' : 'border-slate-600 focus:ring-blue-500'
+                className={`w-full px-4 py-3 bg-slate-50 border rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 transition-all ${
+                  errors.email ? 'border-red-300 focus:ring-red-500' : 'border-slate-200 focus:ring-blue-500 focus:border-blue-500'
                 }`}
               />
-              {errors.email && <p className="mt-1 text-sm text-red-400">{errors.email}</p>}
+              {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-sm font-medium text-slate-300 mb-1 sm:mb-2">
+              <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-1.5">
                 {t('contactForm.message')}
               </label>
               <textarea
@@ -224,23 +174,17 @@ export function ContactForm() {
                 rows={3}
                 value={formData.message}
                 onChange={handleChange}
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-slate-900/60 backdrop-blur-sm border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all resize-none"
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all resize-none"
               />
             </div>
 
-            <motion.div
-              whileHover={prefersReducedMotion ? {} : { scale: 1.02 }}
-              whileTap={prefersReducedMotion ? {} : { scale: 0.98 }}
+            <button
+              type="submit"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
             >
-              <InteractiveHoverButton
-                type="submit"
-                asButton={true}
-                text={t('contactForm.submit')}
-                icon={<Send className="w-4 h-4 sm:w-5 sm:h-5" />}
-                variant="primary"
-                className="shadow-lg shadow-blue-600/30 text-base sm:text-lg px-6 py-3 sm:px-8 sm:py-4"
-              />
-            </motion.div>
+              <Send className="w-5 h-5" />
+              {t('contactForm.submit')}
+            </button>
           </form>
         </motion.div>
       </div>

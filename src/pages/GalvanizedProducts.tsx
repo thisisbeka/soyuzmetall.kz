@@ -1,10 +1,10 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useI18n } from '../i18n/i18n';
 import { useReducedMotion } from '../hooks/useReducedMotion';
-import { ArrowLeft, Package } from 'lucide-react';
+import { ArrowLeft, ShoppingCart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { ContactFormModal } from '../components/ContactFormModal';
+import { QuickOrderModal } from '../components/QuickOrderModal';
 
 interface ProductSpec {
   name: string;
@@ -38,33 +38,27 @@ const galvanizedSpecs: ProductSpec[] = [
 ];
 
 export function GalvanizedProducts() {
-  const { t, language } = useI18n();
+  const { language } = useI18n();
   const prefersReducedMotion = useReducedMotion();
   const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState('');
+  const [orderProduct, setOrderProduct] = useState<string | null>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const handleOrderClick = (spec: ProductSpec) => {
-    const message = `Заказ: ${spec.name}, ${spec.dimensions}, Вес: ${spec.weight} кг, Количество в тонне: ${spec.quantity} шт`;
-    setSelectedProduct(message);
-    setIsModalOpen(true);
-  };
-
   const content = {
     ru: {
       title: 'Оцинкованный лист',
       backText: 'Назад к каталогу',
-      description: 'Оцинкованный лист – это стальной лист, покрытый слоем цинка для защиты от коррозии. Продукт отличается высокой прочностью, долговечностью и устойчивостью к воздействию внешних факторов. Он широко используется в строительстве, автомобилестроении и бытовой технике. Благодаря отличной формуемости и сварочным характеристикам, оцинкованный лист идеально подходит для создания разнообразных конструкций и деталей.',
+      subtitle: 'Оцинкованные листы различных толщин и размеров',
+      description: 'Оцинкованный лист -- это стальной лист, покрытый слоем цинка для защиты от коррозии. Продукт отличается высокой прочностью, долговечностью и устойчивостью к воздействию внешних факторов. Он широко используется в строительстве, автомобилестроении и бытовой технике. Благодаря отличной формуемости и сварочным характеристикам, оцинкованный лист идеально подходит для создания разнообразных конструкций и деталей.',
       characteristics: 'Характеристики:',
       specs: [
         'Толщина: от 0.3 до 3 мм',
         'Ширина: от 1000 до 1500 мм',
         'Длина: до 6000 мм',
-        'Покрытие: цинк от 100 до 275 г/м²'
+        'Покрытие: цинк от 100 до 275 г/м2'
       ],
       tableTitle: 'Спецификации',
       tableHeaders: {
@@ -79,13 +73,14 @@ export function GalvanizedProducts() {
     kk: {
       title: 'Мырышталған парақ',
       backText: 'Каталогқа оралу',
-      description: 'Мырышталған парақ – тоттанудан қорғау үшін мырыш қабатымен жабылған болат парақ. Өнім жоғары беріктігімен, ұзақ мерзімділігімен және сыртқы факторлардың әсеріне төзімділігімен ерекшеленеді. Ол құрылыста, автомобиль өндірісінде және тұрмыстық техникада кеңінен қолданылады. Тамаша қалыптасу және дәнекерлеу сипаттамаларына байланысты мырышталған парақ әртүрлі конструкциялар мен бөлшектерді жасау үшін өте қолайлы.',
+      subtitle: 'Әртүрлі қалыңдық пен өлшемдегі мырышталған парақтар',
+      description: 'Мырышталған парақ -- тоттанудан қорғау үшін мырыш қабатымен жабылған болат парақ. Өнім жоғары беріктігімен, ұзақ мерзімділігімен және сыртқы факторлардың әсеріне төзімділігімен ерекшеленеді. Ол құрылыста, автомобиль өндірісінде және тұрмыстық техникада кеңінен қолданылады. Тамаша қалыптасу және дәнекерлеу сипаттамаларына байланысты мырышталған парақ әртүрлі конструкциялар мен бөлшектерді жасау үшін өте қолайлы.',
       characteristics: 'Сипаттамалары:',
       specs: [
         'Қалыңдығы: 0.3-тен 3 мм-ге дейін',
         'Ені: 1000-нен 1500 мм-ге дейін',
         'Ұзындығы: 6000 мм-ге дейін',
-        'Жабын: мырыш 100-ден 275 г/м²-ге дейін'
+        'Жабын: мырыш 100-ден 275 г/м2-ге дейін'
       ],
       tableTitle: 'Спецификациялар',
       tableHeaders: {
@@ -102,114 +97,96 @@ export function GalvanizedProducts() {
   const text = language === 'kk' ? content.kk : content.ru;
 
   return (
-    <div className="min-h-screen bg-slate-900">
-      <section className="relative py-20 overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-20 will-change-auto"
-          style={{
-            backgroundImage: `url('/metallicheskie-listy.jpg')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
+    <div className="min-h-screen bg-white pt-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <motion.button
+          onClick={() => {
+            navigate('/');
+            setTimeout(() => {
+              const element = document.querySelector('#products');
+              element?.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
           }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/95 via-slate-900/90 to-slate-900" />
+          initial={prefersReducedMotion ? {} : { opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="flex items-center gap-2 text-slate-500 hover:text-blue-600 transition-colors mb-8 group"
+        >
+          <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+          <span>{text.backText}</span>
+        </motion.button>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.button
-            onClick={() => {
-              navigate('/');
-              setTimeout(() => {
-                const element = document.querySelector('#products');
-                element?.scrollIntoView({ behavior: 'smooth' });
-              }, 100);
-            }}
-            initial={prefersReducedMotion ? {} : { opacity: 0, x: -20 }}
-            animate={prefersReducedMotion ? {} : { opacity: 1, x: 0 }}
-            whileHover={prefersReducedMotion ? {} : { x: -5 }}
-            className="flex items-center gap-2 text-slate-400 hover:text-blue-400 transition-colors mb-8 group"
-          >
-            <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-            <span>{text.backText}</span>
-          </motion.button>
-
-          <motion.div
-            initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
-            animate={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
-            className="mb-12"
-          >
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">{text.title}</h1>
-            <p className="text-lg text-slate-300 leading-relaxed mb-8">
-              {text.description}
-            </p>
-
-            <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl p-6 border border-slate-700 mb-8">
-              <h2 className="text-2xl font-bold text-white mb-4">{text.characteristics}</h2>
-              <ul className="space-y-2">
-                {text.specs.map((spec, index) => (
-                  <li key={index} className="text-slate-300 flex items-start">
-                    <span className="text-blue-400 mr-2">•</span>
-                    {spec}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
-            animate={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl border border-slate-700 overflow-hidden"
-          >
-            <div className="p-6 border-b border-slate-700">
-              <h2 className="text-2xl font-bold text-white">{text.tableTitle}</h2>
-            </div>
-
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-slate-700">
-                    <th className="text-left p-4 text-slate-400 font-semibold">{text.tableHeaders.name}</th>
-                    <th className="text-left p-4 text-slate-400 font-semibold">{text.tableHeaders.dimensions}</th>
-                    <th className="text-left p-4 text-slate-400 font-semibold">{text.tableHeaders.weight}</th>
-                    <th className="text-left p-4 text-slate-400 font-semibold">{text.tableHeaders.quantity}</th>
-                    <th className="text-left p-4 text-slate-400 font-semibold">{text.tableHeaders.action}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {galvanizedSpecs.map((spec, index) => (
-                    <motion.tr
-                      key={index}
-                      initial={prefersReducedMotion ? {} : { opacity: 0, x: -20 }}
-                      animate={prefersReducedMotion ? {} : { opacity: 1, x: 0 }}
-                      transition={{ delay: 0.3 + index * 0.02 }}
-                      className="border-b border-slate-700/50 hover:bg-slate-800/50 transition-colors"
-                    >
-                      <td className="p-4 text-slate-300">{spec.name}</td>
-                      <td className="p-4 text-slate-300">{spec.dimensions}</td>
-                      <td className="p-4 text-slate-300">{spec.weight}</td>
-                      <td className="p-4 text-slate-300">{spec.quantity}</td>
-                      <td className="p-4">
-                        <button
-                          onClick={() => handleOrderClick(spec)}
-                          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm font-medium"
-                        >
-                          {text.orderButton}
-                        </button>
-                      </td>
-                    </motion.tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </motion.div>
+        <div className="mb-10">
+          <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-2">{text.title}</h1>
+          <p className="text-lg text-slate-500">{text.subtitle}</p>
         </div>
-      </section>
 
-      <ContactFormModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        prefilledMessage={selectedProduct}
+        <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200 mb-8">
+          <p className="text-slate-600 leading-relaxed mb-6">{text.description}</p>
+          <h3 className="text-lg font-bold text-slate-900 mb-3">{text.characteristics}</h3>
+          <ul className="space-y-2">
+            {text.specs.map((spec, index) => (
+              <li key={index} className="text-slate-600 flex items-start">
+                <span className="text-blue-600 mr-2">•</span>
+                {spec}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <h2 className="text-2xl font-bold text-slate-900 mb-4">{text.tableTitle}</h2>
+
+        <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+          <div className="hidden sm:grid grid-cols-[1fr_120px_100px_140px_100px] gap-4 px-6 py-3 bg-slate-50 border-b border-slate-200 text-sm font-medium text-slate-500">
+            <span>{text.tableHeaders.name}</span>
+            <span className="text-center">{text.tableHeaders.dimensions}</span>
+            <span className="text-center">{text.tableHeaders.weight}</span>
+            <span className="text-center">{text.tableHeaders.quantity}</span>
+            <span className="text-center">{text.tableHeaders.action}</span>
+          </div>
+
+          {galvanizedSpecs.map((spec, index) => {
+            const fullName = `${spec.name} (${spec.dimensions})`;
+
+            return (
+              <div
+                key={index}
+                className="grid grid-cols-1 sm:grid-cols-[1fr_120px_100px_140px_100px] gap-2 sm:gap-4 items-center px-6 py-4 border-b border-slate-100 last:border-b-0 hover:bg-blue-50/50 transition-colors"
+              >
+                <div>
+                  <span className="font-medium text-slate-900">{spec.name}</span>
+                </div>
+
+                <div className="text-center">
+                  <span className="text-slate-600">{spec.dimensions}</span>
+                </div>
+
+                <div className="text-center">
+                  <span className="text-slate-600">{spec.weight}</span>
+                </div>
+
+                <div className="text-center">
+                  <span className="text-slate-600">{spec.quantity}</span>
+                </div>
+
+                <div className="text-center">
+                  <button
+                    onClick={() => setOrderProduct(fullName)}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors"
+                  >
+                    <ShoppingCart className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline">{text.orderButton}</span>
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <QuickOrderModal
+        isOpen={!!orderProduct}
+        onClose={() => setOrderProduct(null)}
+        productName={orderProduct || ''}
       />
     </div>
   );

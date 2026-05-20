@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useI18n } from '../i18n/i18n';
 import { useReducedMotion } from '../hooks/useReducedMotion';
-import { Truck, Award, TrendingDown, Users } from 'lucide-react';
+import { Truck, Award, TrendingDown, Users, Play } from 'lucide-react';
 
 const icons = [Truck, Award, TrendingDown, Users];
 
@@ -11,69 +11,58 @@ export function Benefits() {
   const benefits = t('benefits.items');
 
   return (
-    <section className="relative py-20 bg-slate-900 overflow-hidden">
-      <div
-        className="absolute inset-0 opacity-30 will-change-auto"
-        style={{
-          backgroundImage: `url('/3.png')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-900/80" />
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative py-14 bg-slate-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.h2
           initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
           whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-4xl font-bold text-center text-white mb-16"
+          className="text-3xl font-bold text-center text-slate-900 mb-10"
         >
           {t('benefits.title')}
         </motion.h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {benefits.map((benefit: any, index: number) => {
-            const Icon = icons[index % icons.length];
-            return (
-              <motion.div
-                key={index}
-                initial={prefersReducedMotion ? {} : {
-                  opacity: 0,
-                  y: 20
-                }}
-                whileInView={prefersReducedMotion ? {} : {
-                  opacity: 1,
-                  y: 0
-                }}
-                viewport={{ once: true, margin: '0px', amount: 0.3 }}
-                transition={{
-                  duration: 0.5,
-                  delay: index * 0.1,
-                  ease: [0.25, 0.46, 0.45, 0.94]
-                }}
-                whileHover={prefersReducedMotion ? {} : {
-                  y: -8,
-                  scale: 1.02,
-                  transition: { duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }
-                }}
-                className="group relative bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 border border-slate-700 hover:border-blue-500/50 transition-all duration-300"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-blue-500/0 group-hover:from-blue-500/5 group-hover:to-blue-500/10 rounded-xl transition-all duration-300" />
-
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {benefits.map((benefit: any, index: number) => {
+              const Icon = icons[index % icons.length];
+              return (
                 <motion.div
-                  whileHover={prefersReducedMotion ? {} : { rotate: 360 }}
-                  transition={{ duration: 0.6 }}
-                  className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mb-4 shadow-lg shadow-blue-500/30"
+                  key={index}
+                  initial={prefersReducedMotion ? {} : { opacity: 0, y: 15 }}
+                  whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.4, delay: index * 0.08 }}
+                  className="bg-white rounded-xl p-5 border border-slate-200 hover:border-blue-200 hover:shadow-md transition-all duration-300"
                 >
-                  <Icon className="w-6 h-6 text-white" />
+                  <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center mb-3">
+                    <Icon className="w-5 h-5 text-blue-600" />
+                  </div>
+                  <h3 className="text-base font-semibold text-slate-900 mb-1">{benefit.title}</h3>
+                  <p className="text-slate-500 text-sm leading-relaxed">{benefit.description}</p>
                 </motion.div>
+              );
+            })}
+          </div>
 
-                <h3 className="text-lg font-bold text-white mb-2">{benefit.title}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed">{benefit.description}</p>
-              </motion.div>
-            );
-          })}
+          <motion.div
+            initial={prefersReducedMotion ? {} : { opacity: 0, x: 20 }}
+            whileInView={prefersReducedMotion ? {} : { opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="relative rounded-2xl overflow-hidden aspect-video bg-slate-200 border border-slate-200 flex items-center justify-center group cursor-pointer"
+          >
+            <div
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: `url('/1.png')` }}
+            />
+            <div className="absolute inset-0 bg-slate-900/40 group-hover:bg-slate-900/50 transition-colors" />
+            <div className="relative z-10 w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
+              <Play className="w-7 h-7 text-blue-600 ml-1" />
+            </div>
+            <span className="absolute bottom-4 left-4 text-white font-medium text-sm z-10">
+              Видео о компании
+            </span>
+          </motion.div>
         </div>
       </div>
     </section>

@@ -14,10 +14,10 @@ export function HomePage() {
       <section id="home">
         <AnimatedHero />
       </section>
-      <Benefits />
       <section id="products">
         <Products />
       </section>
+      <Benefits />
       <section id="services">
         <Services />
       </section>

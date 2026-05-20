@@ -77,9 +77,9 @@ const TextRotate = forwardRef<TextRotateRef, TextRotateProps>(
     const [currentTextIndex, setCurrentTextIndex] = useState(0)
 
     const splitIntoCharacters = (text: string): string[] => {
-      if (typeof Intl !== "undefined" && "Segmenter" in Intl) {
-        const segmenter = new Intl.Segmenter("en", { granularity: "grapheme" })
-        return Array.from(segmenter.segment(text), ({ segment }) => segment)
+      if (typeof Intl !== "undefined" && "Segmenter" in (Intl as any)) {
+        const segmenter = new (Intl as any).Segmenter("en", { granularity: "grapheme" })
+        return Array.from(segmenter.segment(text), ({ segment }: any) => segment as string)
       }
       return Array.from(text)
     }

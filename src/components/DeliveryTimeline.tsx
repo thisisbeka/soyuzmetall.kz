@@ -11,56 +11,40 @@ export function DeliveryTimeline() {
   const steps = t('delivery.steps');
 
   return (
-    <section className="relative py-20 bg-slate-900 overflow-hidden">
-      <div
-        className="absolute inset-0 opacity-30 will-change-auto"
-        style={{
-          backgroundImage: `url('/6.png')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-900/80" />
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative py-16 bg-slate-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.h2
           initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
           whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-4xl font-bold text-center text-white mb-16"
+          className="text-3xl font-bold text-center text-slate-900 mb-12"
         >
           {t('delivery.title')}
         </motion.h2>
 
         <div className="relative">
-          <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-slate-700 via-blue-500 to-slate-700 transform -translate-y-1/2 hidden lg:block" />
+          <div className="absolute top-10 left-0 right-0 h-0.5 bg-blue-200 hidden lg:block" />
 
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-4 relative">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative">
             {steps.map((step: any, index: number) => {
               const Icon = icons[index];
               return (
                 <motion.div
                   key={index}
-                  initial={prefersReducedMotion ? {} : { opacity: 0, y: 50 }}
+                  initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
                   whileInView={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.15 }}
-                  className="relative"
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  className="text-center"
                 >
-                  <div className="flex flex-col items-center text-center">
-                    <motion.div
-                      whileHover={prefersReducedMotion ? {} : { scale: 1.1, rotate: 5 }}
-                      className="relative z-10 w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mb-6 shadow-xl shadow-blue-500/30 border-4 border-slate-900"
-                    >
-                      <Icon className="w-10 h-10 text-white" />
-                      <div className="absolute -top-2 -right-2 w-8 h-8 bg-slate-900 rounded-full flex items-center justify-center border-2 border-blue-500">
-                        <span className="text-blue-500 font-bold">{index + 1}</span>
-                      </div>
-                    </motion.div>
-
-                    <h3 className="text-xl font-bold text-white mb-2">{step.title}</h3>
-                    <p className="text-slate-400 text-sm">{step.description}</p>
+                  <div className="relative z-10 w-20 h-20 bg-white border-2 border-blue-200 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+                    <Icon className="w-8 h-8 text-blue-600" />
+                    <div className="absolute -top-1 -right-1 w-7 h-7 bg-blue-600 rounded-full flex items-center justify-center">
+                      <span className="text-white text-xs font-bold">{index + 1}</span>
+                    </div>
                   </div>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-1">{step.title}</h3>
+                  <p className="text-slate-500 text-sm">{step.description}</p>
                 </motion.div>
               );
             })}

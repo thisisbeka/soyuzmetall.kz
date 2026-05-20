@@ -1,9 +1,10 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useI18n } from '../i18n/i18n';
 import { useReducedMotion } from '../hooks/useReducedMotion';
-import { ArrowLeft, Package } from 'lucide-react';
+import { ArrowLeft, ShoppingCart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { QuickOrderModal } from '../components/QuickOrderModal';
 
 interface SquareCard {
   nameRu: string;
@@ -20,10 +21,10 @@ const squareCards: SquareCard[] = [
 ];
 
 export function SquareProducts() {
-  const { t, language } = useI18n();
+  const { language } = useI18n();
   const prefersReducedMotion = useReducedMotion();
   const navigate = useNavigate();
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const [orderProduct, setOrderProduct] = useState<string | null>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -33,6 +34,7 @@ export function SquareProducts() {
     ru: {
       title: 'Квадрат стальной',
       backText: 'Назад к каталогу',
+      subtitle: 'Стальной горячекатаный квадрат различных размеров',
       description: {
         intro: 'Стальной горячекатаный квадрат является популярным видом металлопроката, используемым преимущественно в области строительства. Создаваемый из специальной заготовки на прокатном стане (согласно требованиям Государственного стандарта качества), он обладает строгими геометрическими размерами, а также определенными физическими и механическими характеристиками.',
         offer: 'Если вы собираетесь купить квадрат стальной, то сделать это можете уже прямо сейчас, обратившись к специалистам нашей компании «СоюзМеталл». У нас представлен наиболее широкий выбор качественного металлопроката от самых известных и проверенных заводов-изготовителей, а также действует большое количество филиалов, расположенных в самых различных частях Казахстана.',
@@ -58,11 +60,12 @@ export function SquareProducts() {
     kk: {
       title: 'Болат квадрат',
       backText: 'Каталогқа оралу',
+      subtitle: 'Әртүрлі өлшемдегі болат ыстық илемденген квадрат',
       description: {
         intro: 'Болаттан жасалған ыстық илемденген квадрат құрылыста негізінен қолданылатын металл илемнің танымал түрі болып табылады. Илем станында арнайы дайындамадан жасалған (Мемлекеттік сапа стандартының талаптарына сәйкес), ол қатаң геометриялық өлшемдерге, сондай-ақ белгілі бір физикалық және механикалық сипаттамаларға ие.',
         offer: 'Егер сіз болат квадратты сатып алғыңыз келсе, дәл қазір біздің «СоюзМеталл» компаниясының мамандарына хабарласу арқылы мұны жасай аласыз. Бізде ең танымал және тексерілген зауыттар-өндірушілерден сапалы металл илемнің ең кең таңдауы, сондай-ақ Қазақстанның әртүрлі бөліктерінде орналасқан филиалдардың үлкен саны бар.',
         whatIsTitle: 'Болат ыстық илемденген квадрат дегеніміз не?',
-        whatIs: 'Бұл қалыңдығы 0,6-дан 20 сантиметрге дейін болатын квадрат қимасы бар болат қорытпадан жасалған стержень. Оның ішкі қуысы жоқ, соның арқылы қатаңдықтың жоғары деңгейімен ерекшеленеді және беріктік пен сенімділік тұрғысынан ең жоғары талаптарға сәйкес келеді. Оны өндіру кезінде легирленген және қарапайым болаттардың әртүрлі түрлері қолданылады, ал металл илемнің өндірісі МЕСТ 2591-88 реттелген талаптарына сәйкес жүзеге асырылады. Мұндай өнімнің ұзындығына келетін болсақ, ол әртүрлі болуы мүмкін және әдетте 1-ден 12 метрге дейін өзгереді.',
+        whatIs: 'Бұл қалыңдығы 0,6-дан 20 сантиметрге дейін болатын квадрат қимасы бар болат қорытпадан жасалған стержень. Оның ішкі қуысы жоқ, соның арқасында қатаңдықтың жоғары деңгейімен ерекшеленеді және беріктік пен сенімділік тұрғысынан ең жоғары талаптарға сәйкес келеді. Оны өндіру кезінде легирленген және қарапайым болаттардың әртүрлі түрлері қолданылады, ал металл илемнің өндірісі МЕСТ 2591-88 реттелген талаптарына сәйкес жүзеге асырылады. Мұндай өнімнің ұзындығына келетін болсақ, ол әртүрлі болуы мүмкін және әдетте 1-ден 12 метрге дейін өзгереді.',
         applicationTitle: 'Мұндай материал қайда қолданылады?',
         application: 'Өзінің бірегей пайдалану қасиеттерінің арқасында болат квадрат әртүрлі қызмет салаларында кең таралды, атап айтқанда:',
         construction: 'Құрылыс саласында. Мұндай элементтің жоғары беріктігі оны жеке үйлер мен коттеджелерді, көп қабатты тұрғын ғимараттарды, сондай-ақ өнеркәсіптік және әкімшілік ғимараттарды салу кезінде тіреуіш конструкцияларды жасау кезінде қолдануға мүмкіндік береді. Жиі ол төбелер, терраса немесе баспалдақтарды нығайту кезінде қолданылады;',
@@ -85,170 +88,129 @@ export function SquareProducts() {
   const text = language === 'kk' ? content.kk : content.ru;
 
   return (
-    <div className="min-h-screen bg-slate-900">
-      <section className="relative py-20 overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-20 will-change-auto"
-          style={{
-            backgroundImage: `url('/kvadrat.png')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
+    <div className="min-h-screen bg-white pt-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <motion.button
+          onClick={() => {
+            navigate('/');
+            setTimeout(() => {
+              const element = document.querySelector('#products');
+              element?.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
           }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/95 via-slate-900/90 to-slate-900" />
+          initial={prefersReducedMotion ? {} : { opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="flex items-center gap-2 text-slate-500 hover:text-blue-600 transition-colors mb-8 group"
+        >
+          <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+          <span>{text.backText}</span>
+        </motion.button>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.button
-            onClick={() => {
-              navigate('/');
-              setTimeout(() => {
-                const element = document.querySelector('#products');
-                element?.scrollIntoView({ behavior: 'smooth' });
-              }, 100);
-            }}
-            initial={prefersReducedMotion ? {} : { opacity: 0, x: -20 }}
-            animate={prefersReducedMotion ? {} : { opacity: 1, x: 0 }}
-            whileHover={prefersReducedMotion ? {} : { x: -5 }}
-            className="flex items-center gap-2 text-slate-400 hover:text-blue-400 transition-colors mb-8 group"
-          >
-            <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-            <span>{text.backText}</span>
-          </motion.button>
+        <div className="mb-10">
+          <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-2">{text.title}</h1>
+          <p className="text-lg text-slate-500">{text.subtitle}</p>
+        </div>
 
-          <div className="mb-16">
-            <motion.h1
-              initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
-              animate={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
-              className="text-4xl md:text-5xl font-bold text-white mb-12 text-center"
-            >
-              {text.title}
-            </motion.h1>
+        <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden mb-10">
+          <div className="hidden sm:grid grid-cols-[1fr_120px_120px] gap-4 px-6 py-3 bg-slate-50 border-b border-slate-200 text-sm font-medium text-slate-500">
+            <span>{language === 'kk' ? 'Атауы' : 'Наименование'}</span>
+            <span className="text-center">{language === 'kk' ? 'Қолжетімділік' : 'Наличие'}</span>
+            <span className="text-center">{language === 'kk' ? 'Тапсырыс' : 'Заказ'}</span>
+          </div>
 
-            <h2 className="text-3xl font-bold text-white mb-8 text-center">
-              {language === 'kk' ? 'Өнімдер' : 'Продукция'}
-            </h2>
+          {squareCards.map((card, index) => {
+            const cardName = language === 'kk' ? card.nameKk : card.nameRu;
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-              {squareCards.map((card, index) => {
-                const cardName = language === 'kk' ? card.nameKk : card.nameRu;
+            return (
+              <div
+                key={index}
+                className="grid grid-cols-1 sm:grid-cols-[1fr_120px_120px] gap-2 sm:gap-4 items-center px-6 py-4 border-b border-slate-100 last:border-b-0 hover:bg-blue-50/50 transition-colors"
+              >
+                <div>
+                  <span className="font-medium text-slate-900">{cardName}</span>
+                </div>
 
-                return (
-                  <motion.div
-                    key={`${index}-${language}`}
-                    initial={prefersReducedMotion ? {} : {
-                      opacity: 0,
-                      y: 20
-                    }}
-                    animate={prefersReducedMotion ? {} : {
-                      opacity: 1,
-                      y: 0
-                    }}
-                    transition={{
-                      duration: 0.5,
-                      delay: isMobile ? 0 : index * 0.1,
-                      ease: [0.25, 0.46, 0.45, 0.94]
-                    }}
-                    whileHover={prefersReducedMotion || isMobile ? {} : {
-                      y: -8,
-                      scale: 1.02,
-                      transition: { duration: 0.3, ease: [0.34, 1.56, 0.64, 1] }
-                    }}
-                    className="group relative bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl p-6 border border-slate-700 hover:border-blue-500/50 transition-all duration-300 overflow-hidden will-change-transform"
+                <div className="text-center">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-200">
+                    В наличии
+                  </span>
+                </div>
+
+                <div className="text-center">
+                  <button
+                    onClick={() => setOrderProduct(cardName)}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors"
                   >
-                    <div
-                      className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity duration-300 will-change-opacity"
-                      style={{
-                        backgroundImage: `url('${card.image}')`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        backgroundRepeat: 'no-repeat',
-                      }}
-                    />
-
-                    <div className="absolute inset-0 bg-gradient-to-br from-slate-900/80 via-slate-800/70 to-slate-900/90 group-hover:from-slate-900/70 group-hover:via-slate-800/60 group-hover:to-slate-900/80 transition-all duration-300" />
-
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-all duration-300" />
-
-                    <div className="relative z-10">
-                      <motion.div
-                        className="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mb-4 shadow-lg shadow-blue-500/20"
-                        whileHover={prefersReducedMotion ? {} : { scale: 1.1, rotate: 5 }}
-                      >
-                        <Package className="w-7 h-7 text-white" />
-                      </motion.div>
-
-                      <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
-                        {cardName}
-                      </h3>
-                    </div>
-
-                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </motion.div>
-                );
-              })}
-            </div>
-
-            <motion.div
-              initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
-              animate={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="max-w-4xl mx-auto space-y-6"
-            >
-              <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-8 border border-slate-700">
-                <p className="text-slate-300 text-lg leading-relaxed mb-6">
-                  {text.description.intro}
-                </p>
-                <p className="text-slate-300 text-lg leading-relaxed">
-                  {text.description.offer}
-                </p>
-              </div>
-
-              <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-8 border border-slate-700">
-                <h2 className="text-2xl font-bold text-white mb-4">
-                  {text.description.whatIsTitle}
-                </h2>
-                <p className="text-slate-300 text-lg leading-relaxed">
-                  {text.description.whatIs}
-                </p>
-              </div>
-
-              <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-8 border border-slate-700">
-                <h2 className="text-2xl font-bold text-white mb-4">
-                  {text.description.applicationTitle}
-                </h2>
-                <p className="text-slate-300 text-lg leading-relaxed mb-4">
-                  {text.description.application}
-                </p>
-                <div className="space-y-4">
-                  <p className="text-slate-300 text-lg leading-relaxed">
-                    {text.description.construction}
-                  </p>
-                  <p className="text-slate-300 text-lg leading-relaxed">
-                    {text.description.industry}
-                  </p>
+                    <ShoppingCart className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline">Заказать</span>
+                  </button>
                 </div>
               </div>
+            );
+          })}
+        </div>
 
-              <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-8 border border-slate-700">
-                <h2 className="text-2xl font-bold text-white mb-4">
-                  {text.description.priceTitle}
-                </h2>
-                <p className="text-slate-300 text-lg leading-relaxed mb-6">
-                  {text.description.price}
-                </p>
-                <ul className="space-y-3">
-                  {text.description.features.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <span className="text-blue-400 mt-1.5 flex-shrink-0">•</span>
-                      <span className="text-slate-300 text-lg leading-relaxed">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </motion.div>
+        {/* Description content */}
+        <div className="max-w-4xl mx-auto space-y-6">
+          <div className="bg-slate-50 rounded-2xl p-8 border border-slate-200">
+            <p className="text-slate-600 text-lg leading-relaxed mb-6">
+              {text.description.intro}
+            </p>
+            <p className="text-slate-600 text-lg leading-relaxed">
+              {text.description.offer}
+            </p>
+          </div>
+
+          <div className="bg-slate-50 rounded-2xl p-8 border border-slate-200">
+            <h2 className="text-2xl font-bold text-slate-900 mb-4">
+              {text.description.whatIsTitle}
+            </h2>
+            <p className="text-slate-600 text-lg leading-relaxed">
+              {text.description.whatIs}
+            </p>
+          </div>
+
+          <div className="bg-slate-50 rounded-2xl p-8 border border-slate-200">
+            <h2 className="text-2xl font-bold text-slate-900 mb-4">
+              {text.description.applicationTitle}
+            </h2>
+            <p className="text-slate-600 text-lg leading-relaxed mb-4">
+              {text.description.application}
+            </p>
+            <div className="space-y-4">
+              <p className="text-slate-600 text-lg leading-relaxed">
+                {text.description.construction}
+              </p>
+              <p className="text-slate-600 text-lg leading-relaxed">
+                {text.description.industry}
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-slate-50 rounded-2xl p-8 border border-slate-200">
+            <h2 className="text-2xl font-bold text-slate-900 mb-4">
+              {text.description.priceTitle}
+            </h2>
+            <p className="text-slate-600 text-lg leading-relaxed mb-6">
+              {text.description.price}
+            </p>
+            <ul className="space-y-3">
+              {text.description.features.map((feature, index) => (
+                <li key={index} className="flex items-start gap-3">
+                  <span className="text-blue-600 mt-1.5 flex-shrink-0">•</span>
+                  <span className="text-slate-600 text-lg leading-relaxed">{feature}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
-      </section>
+      </div>
+
+      <QuickOrderModal
+        isOpen={!!orderProduct}
+        onClose={() => setOrderProduct(null)}
+        productName={orderProduct || ''}
+      />
     </div>
   );
 }

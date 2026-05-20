@@ -17,7 +17,7 @@ function App() {
   return (
     <BrowserRouter>
       <I18nProvider>
-        <div className="min-h-screen bg-slate-900">
+        <div className="min-h-screen bg-white">
           <Header />
           <main>
             <Routes>
