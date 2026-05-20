@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { useI18n } from '../i18n/i18n';
 import { useReducedMotion } from '../hooks/useReducedMotion';
-import { MessageCircle } from 'lucide-react';
 
 export function CTASection() {
   const { t } = useI18n();
@@ -45,7 +44,7 @@ export function CTASection() {
             onClick={handleWhatsApp}
             className="inline-flex items-center gap-3 px-8 py-4 bg-green-500 hover:bg-green-600 text-white font-semibold text-lg rounded-2xl shadow-xl shadow-green-500/30 transition-all duration-300 hover:-translate-y-0.5"
           >
-            <MessageCircle className="w-6 h-6" />
+            <img src="/wp_icon.png" alt="" className="w-6 h-6 filter brightness-0 invert" />
             {t('cta.button')}
           </button>
         </motion.div>

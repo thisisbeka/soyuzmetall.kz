@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, MessageCircle } from 'lucide-react';
+import { X } from 'lucide-react';
 
 interface QuickOrderModalProps {
   isOpen: boolean;
@@ -99,7 +99,7 @@ export function QuickOrderModal({ isOpen, onClose, productName }: QuickOrderModa
                 type="submit"
                 className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
               >
-                <MessageCircle className="w-5 h-5" />
+                <img src="/wp_icon.png" alt="" className="w-5 h-5 filter brightness-0 invert" />
                 Отправить в WhatsApp
               </button>
             </form>
