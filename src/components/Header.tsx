@@ -50,8 +50,8 @@ export function Header() {
       <motion.header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? 'bg-white/95 backdrop-blur-lg shadow-sm border-b border-slate-200/80'
-            : 'bg-white/70 backdrop-blur-sm'
+            ? 'bg-slate-900/95 backdrop-blur-lg shadow-lg'
+            : 'bg-transparent'
         }`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
@@ -77,7 +77,11 @@ export function Header() {
                   key={item.key}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
-                  className="relative font-medium transition-colors group text-slate-700 hover:text-blue-600"
+                  className={`relative font-medium transition-colors group ${
+                    isScrolled
+                      ? 'text-slate-200 hover:text-white'
+                      : 'text-slate-700 hover:text-blue-600'
+                  }`}
                 >
                   {t(`nav.${item.key}`)}
                   <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-blue-600 scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
@@ -89,7 +93,11 @@ export function Header() {
               <LanguageSwitcher />
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="lg:hidden p-2 rounded-lg transition-colors text-slate-700 hover:bg-slate-100"
+                className={`lg:hidden p-2 rounded-lg transition-colors ${
+                  isScrolled
+                    ? 'text-white hover:bg-slate-800'
+                    : 'text-slate-700 hover:bg-slate-100'
+                }`}
               >
                 <Menu className="w-6 h-6" />
               </button>
