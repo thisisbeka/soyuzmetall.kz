@@ -1,11 +1,15 @@
+import { useState } from 'react';
 import { motion, LayoutGroup } from 'framer-motion';
 import { useI18n } from '../i18n/i18n';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import { TextRotate } from './ui/text-rotate';
+import { MessageSquare } from 'lucide-react';
+import { ContactFormModal } from './ContactFormModal';
 
 export function AnimatedHero() {
   const { t } = useI18n();
   const prefersReducedMotion = useReducedMotion();
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -110,9 +114,18 @@ export function AnimatedHero() {
               <img src="/inst_icon.png" alt="Instagram" className="w-6 h-6 filter brightness-0 invert" />
               @soiuz_metall
             </a>
+            <button
+              onClick={() => setIsContactModalOpen(true)}
+              className="inline-flex items-center gap-2 sm:gap-3 px-5 sm:px-8 py-3 sm:py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-base sm:text-lg rounded-xl sm:rounded-2xl shadow-xl shadow-blue-600/30 hover:shadow-blue-600/40 transition-all duration-300 hover:-translate-y-0.5 self-start"
+            >
+              <MessageSquare className="w-6 h-6" />
+              {t('contactForm.title')}
+            </button>
           </motion.div>
         </div>
       </motion.div>
+
+      <ContactFormModal isOpen={isContactModalOpen} onClose={() => setIsContactModalOpen(false)} />
     </section>
   );
 }
