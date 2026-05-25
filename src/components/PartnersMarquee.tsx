@@ -51,20 +51,18 @@ export function PartnersMarquee() {
             {allPartners.map((partner, index) => (
               <div
                 key={index}
-                className="flex-shrink-0 w-56 h-24 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-center gap-3 px-5 hover:border-blue-200 hover:shadow-sm transition-all"
+                className="flex-shrink-0 w-56 h-28 bg-slate-50 rounded-xl border border-slate-200 flex flex-col items-center justify-center gap-2 px-5 hover:border-blue-200 hover:shadow-sm transition-all"
               >
                 {partner.logo ? (
                   <img
                     src={partner.logo}
                     alt={partner.name}
-                    className="max-h-14 max-w-[140px] object-contain"
+                    className="max-h-10 max-w-[120px] object-contain"
                   />
                 ) : (
-                  <>
-                    <Building2 className="w-7 h-7 text-blue-600 flex-shrink-0" />
-                    <span className="text-slate-700 font-medium text-sm text-center">{partner.name}</span>
-                  </>
+                  <Building2 className="w-6 h-6 text-blue-600 flex-shrink-0" />
                 )}
+                <span className="text-slate-700 font-medium text-xs text-center leading-tight">{partner.name}</span>
               </div>
             ))}
           </div>
