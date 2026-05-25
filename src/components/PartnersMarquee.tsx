@@ -9,8 +9,8 @@ const partners: { name: string; logo?: string }[] = [
   { name: 'KazBuild Development', logo: '/KazBuild_Development.webp' },
   { name: 'Saba group', logo: '/Saba_group.png' },
   { name: 'Bazis-A', logo: '/Bazis-A.webp' },
-  { name: 'Корпорация Век' },
-  { name: 'Барыс Строй 2021' },
+  { name: 'Корпорация Век', logo: '/Корпорация_Век.png' },
+  { name: 'Барыс Строй 2021', logo: '/Барыс_Строй_2021.webp' },
   { name: 'Gask Construction' },
 ];
 
