@@ -93,14 +93,23 @@ export function AnimatedHero() {
             {t('hero.subtitle')}
           </motion.p>
 
-          <motion.div variants={itemVariants}>
+          <motion.div variants={itemVariants} className="flex flex-col gap-4">
             <button
               onClick={handleWhatsApp}
-              className="inline-flex items-center gap-2 sm:gap-3 px-5 sm:px-8 py-3 sm:py-4 bg-green-500 hover:bg-green-600 text-white font-semibold text-base sm:text-lg rounded-xl sm:rounded-2xl shadow-xl shadow-green-500/30 hover:shadow-green-500/40 transition-all duration-300 hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 sm:gap-3 px-5 sm:px-8 py-3 sm:py-4 bg-green-500 hover:bg-green-600 text-white font-semibold text-base sm:text-lg rounded-xl sm:rounded-2xl shadow-xl shadow-green-500/30 hover:shadow-green-500/40 transition-all duration-300 hover:-translate-y-0.5 self-start"
             >
               <img src="/wp_icon.png" alt="" className="w-6 h-6 filter brightness-0 invert" />
               {t('hero.ctaWhatsApp')}
             </button>
+            <a
+              href="https://instagram.com/soiuz_metall"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-slate-600 hover:text-pink-600 transition-colors self-start"
+            >
+              <img src="/inst_icon.png" alt="Instagram" className="w-5 h-5" />
+              <span className="text-sm font-medium">@soiuz_metall</span>
+            </a>
           </motion.div>
         </div>
       </motion.div>
