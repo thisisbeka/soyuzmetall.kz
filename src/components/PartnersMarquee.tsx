@@ -3,20 +3,22 @@ import { useReducedMotion } from '../hooks/useReducedMotion';
 import { motion } from 'framer-motion';
 import { Building2 } from 'lucide-react';
 
-const partnerNames = [
-  'Nomad group',
-  'Ulytau Group',
-  'KazBuild Development',
-  'Saba group',
-  'Bazis-A',
-  'Корпорация Век',
-  'Барыс Строй 2021',
-  'Gask Construction',
+const partners: { name: string; logo?: string }[] = [
+  { name: 'Nomad group' },
+  { name: 'Ulytau Group', logo: '/Ulytau-Group.svg' },
+  { name: 'KazBuild Development', logo: '/KazBuild_Development.webp' },
+  { name: 'Saba group', logo: '/Saba_group.png' },
+  { name: 'Bazis-A', logo: '/Bazis-A.webp' },
+  { name: 'Корпорация Век' },
+  { name: 'Барыс Строй 2021' },
+  { name: 'Gask Construction' },
 ];
 
 export function PartnersMarquee() {
   const { t } = useI18n();
   const prefersReducedMotion = useReducedMotion();
+
+  const allPartners = [...partners, ...partners, ...partners];
 
   return (
     <section id="about" className="relative py-16 bg-white overflow-hidden">
@@ -46,13 +48,23 @@ export function PartnersMarquee() {
 
         <div className="overflow-hidden">
           <div className={`flex gap-6 ${prefersReducedMotion ? '' : 'animate-marquee'}`}>
-            {[...partnerNames, ...partnerNames, ...partnerNames].map((name, index) => (
+            {allPartners.map((partner, index) => (
               <div
                 key={index}
                 className="flex-shrink-0 w-56 h-24 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-center gap-3 px-5 hover:border-blue-200 hover:shadow-sm transition-all"
               >
-                <Building2 className="w-7 h-7 text-blue-600 flex-shrink-0" />
-                <span className="text-slate-700 font-medium text-sm text-center">{name}</span>
+                {partner.logo ? (
+                  <img
+                    src={partner.logo}
+                    alt={partner.name}
+                    className="max-h-14 max-w-[140px] object-contain"
+                  />
+                ) : (
+                  <>
+                    <Building2 className="w-7 h-7 text-blue-600 flex-shrink-0" />
+                    <span className="text-slate-700 font-medium text-sm text-center">{partner.name}</span>
+                  </>
+                )}
               </div>
             ))}
           </div>
