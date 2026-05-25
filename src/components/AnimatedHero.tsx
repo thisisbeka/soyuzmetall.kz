@@ -105,10 +105,10 @@ export function AnimatedHero() {
               href="https://instagram.com/soiuz_metall"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-slate-600 hover:text-pink-600 transition-colors self-start"
+              className="inline-flex items-center gap-2 sm:gap-3 px-5 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-pink-500 via-rose-500 to-orange-400 hover:from-pink-600 hover:via-rose-600 hover:to-orange-500 text-white font-semibold text-base sm:text-lg rounded-xl sm:rounded-2xl shadow-xl shadow-pink-500/30 hover:shadow-pink-500/40 transition-all duration-300 hover:-translate-y-0.5 self-start"
             >
-              <img src="/inst_icon.png" alt="Instagram" className="w-5 h-5" />
-              <span className="text-sm font-medium">@soiuz_metall</span>
+              <img src="/inst_icon.png" alt="Instagram" className="w-6 h-6 filter brightness-0 invert" />
+              @soiuz_metall
             </a>
           </motion.div>
         </div>
