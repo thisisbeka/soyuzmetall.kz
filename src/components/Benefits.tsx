@@ -56,7 +56,7 @@ export function Benefits() {
           >
             {isPlaying ? (
               <iframe
-                src={`https://drive.google.com/file/d/${GDRIVE_VIDEO_ID}/preview`}
+                src={`https://drive.google.com/file/d/${GDRIVE_VIDEO_ID}/preview?autoplay=1`}
                 className="absolute inset-0 w-full h-full"
                 allow="autoplay; encrypted-media"
                 allowFullScreen
