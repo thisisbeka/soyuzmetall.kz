@@ -57,10 +57,17 @@ export function Benefits() {
             {isPlaying ? (
               <iframe
                 src={`https://drive.google.com/file/d/${GDRIVE_VIDEO_ID}/preview?autoplay=1`}
-                className="absolute inset-0 w-full h-full"
+                className="absolute w-full h-full"
                 allow="autoplay; encrypted-media"
                 allowFullScreen
-                style={{ border: 'none' }}
+                style={{
+                  border: 'none',
+                  top: '-60px',
+                  bottom: '-60px',
+                  left: 0,
+                  right: 0,
+                  height: 'calc(100% + 120px)',
+                }}
               />
             ) : (
               <div
