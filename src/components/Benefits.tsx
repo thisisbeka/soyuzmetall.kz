@@ -1,17 +1,39 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useI18n } from '../i18n/i18n';
 import { useReducedMotion } from '../hooks/useReducedMotion';
-import { Truck, Award, TrendingDown, Users, Play } from 'lucide-react';
+import { Truck, Award, TrendingDown, Users, Play, Pause } from 'lucide-react';
 
 const icons = [Truck, Award, TrendingDown, Users];
-const GDRIVE_VIDEO_ID = '1HaWKgpDlv4UNgsHjouldXKxyzSzDqTtt';
+
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const VIDEO_URL = `${SUPABASE_URL}/storage/v1/object/public/videos/company-video.mp4`;
 
 export function Benefits() {
   const { t } = useI18n();
   const prefersReducedMotion = useReducedMotion();
   const benefits = t('benefits.items');
   const [isPlaying, setIsPlaying] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (!videoReady) {
+      fetch(`${SUPABASE_URL}/functions/v1/upload-video`, { method: 'POST' })
+        .then(r => r.json())
+        .then(() => setVideoReady(true))
+        .catch(() => setVideoReady(true));
+    }
+  }, []);
+
+  const toggleVideo = () => {
+    if (!videoRef.current) return;
+    if (isPlaying) {
+      videoRef.current.pause();
+    } else {
+      videoRef.current.play();
+    }
+  };
 
   return (
     <section className="relative py-14 bg-slate-50">
@@ -52,43 +74,32 @@ export function Benefits() {
             initial={prefersReducedMotion ? {} : { opacity: 0, x: 20 }}
             whileInView={prefersReducedMotion ? {} : { opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="relative rounded-2xl overflow-hidden aspect-video bg-slate-900 border border-slate-200"
+            onClick={toggleVideo}
+            className="relative rounded-2xl overflow-hidden aspect-video bg-slate-900 border border-slate-200 cursor-pointer group"
           >
-            {isPlaying ? (
-              <iframe
-                src={`https://drive.google.com/file/d/${GDRIVE_VIDEO_ID}/preview?autoplay=1`}
-                className="absolute w-full h-full"
-                allow="autoplay; encrypted-media"
-                allowFullScreen
-                style={{
-                  border: 'none',
-                  top: '-60px',
-                  bottom: '-60px',
-                  left: 0,
-                  right: 0,
-                  height: 'calc(100% + 120px)',
-                }}
-              />
-            ) : (
-              <div
-                className="absolute inset-0 cursor-pointer group"
-                onClick={() => setIsPlaying(true)}
-              >
-                <div
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{ backgroundImage: `url('/1.png')` }}
-                />
-                <div className="absolute inset-0 bg-slate-900/40 group-hover:bg-slate-900/30 transition-colors" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
-                    <Play className="w-7 h-7 text-blue-600 ml-1" />
-                  </div>
-                </div>
-                <span className="absolute bottom-4 left-4 text-white font-medium text-sm">
-                  Видео о компании
-                </span>
+            <video
+              ref={videoRef}
+              src={VIDEO_URL}
+              poster="/1.png"
+              className="absolute inset-0 w-full h-full object-cover"
+              playsInline
+              preload="none"
+              onPlay={() => setIsPlaying(true)}
+              onPause={() => setIsPlaying(false)}
+            />
+            <div className={`absolute inset-0 bg-slate-900/40 transition-opacity duration-300 ${isPlaying ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'}`} />
+            <div className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${isPlaying ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'}`}>
+              <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform">
+                {isPlaying ? (
+                  <Pause className="w-7 h-7 text-blue-600" />
+                ) : (
+                  <Play className="w-7 h-7 text-blue-600 ml-1" />
+                )}
               </div>
-            )}
+            </div>
+            <span className={`absolute bottom-4 left-4 text-white font-medium text-sm transition-opacity duration-300 ${isPlaying ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'}`}>
+              Видео о компании
+            </span>
           </motion.div>
         </div>
       </div>
